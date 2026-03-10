@@ -1,11 +1,8 @@
 # smote ile veriler dengelendi ve oplime uygulandı
-
 library(caret)
 library(randomForest)
 library(dplyr)
 library(smotefamily) 
-
-
 #--------------------------------------------------
 # 1. Veri Standardizasyonu
 #--------------------------------------------------
@@ -70,7 +67,7 @@ run_optilime_v3_smote <- function(data, dataset_name,
   formula_str <- as.formula(paste(target_col, "~ ."))
   X_train_final <- model.matrix(formula_str, data = train_smote)[,-1]
   Y_train_final <- train_smote[[target_col]]
-  rf_model <- randomForest(x = X_train_final, y = Y_train_final, ntree = 100)
+  rf_model <- randomForest(x = X_train_final, y = Y_train_final)
   
   # Test Verisi Hazırlığı
   X_test_all <- model.matrix(formula_str, data = test_scaled)[,-1]
