@@ -63,7 +63,7 @@ run_optilime_v3 <- function(data, dataset_name,
   X_train <- model.matrix(formula_str, data = train_scaled)[,-1]
   Y_train <- train_scaled[[target_col]]
   
-  rf_model <- randomForest(x = X_train, y = Y_train, ntree = 100)
+  rf_model <- randomForest(x = X_train, y = Y_train)
   
   X_test_all <- model.matrix(formula_str, data = test_scaled)[,-1]
   Y_test_all <- test_scaled[[target_col]]
