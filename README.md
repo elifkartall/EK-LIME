@@ -6,7 +6,7 @@
 
 ##  Proje İçeriği
 
-- 📊 [Veri Setleri](./verisetleri) - Üzerinden aalizde kullanılan farklı dengesizlik oranlarına sahip 20 veri setine ulaşılabilir.
+- 📊 [Veri Setleri](./verisetleri) - Üzerinden analizde kullanılan farklı dengesizlik oranlarına sahip 20 veri setine ulaşılabilir.
 - 📂 [Kodlar](./kodlar) - Üzerinden deneyleri tekrarlamak için gerekli R scriptlerine ulaşılabilir.
    Dosya içerisinde deney süreci boyunca takip edilen adımlar scriptler halinde eklenmiştir.
 
