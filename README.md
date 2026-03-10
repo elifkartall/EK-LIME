@@ -22,7 +22,7 @@
 
 ---
 
-##  Deney Sonuçları ve Bulgular
+## Bulgular
 
 ### 1. Çoğunluk Sınıfı Performansı
 <img width="100%" alt="Majority Class Analysis" src="https://github.com/user-attachments/assets/58e0bc26-0e12-4755-b2f1-d9925b0ffc68" />
@@ -36,5 +36,5 @@
 
 ---
 
-## 📝 Sonuç Özeti
+## Sonuç
 Genel olarak sonuçlar, EK-LIME yönteminin LIME açıklamalarında özellikle azınlık sınıf için yerel doğruluk ve kararlılık arasındaki ödünleşim sorununu azaltarak daha kararlı ve yerel doğruluk oranı yüksek açıklamalar ürettiği gözlenmiştir..
