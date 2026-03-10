@@ -1,13 +1,16 @@
 # EK-LIME: Dengesiz Sınıflandırmada Yerel Doğruluk ve Kararlılık Dengelemesi
 
-> **Özet:** Bu çalışma, LIME açıklamalarında yerel doğruluk ile kararlılık arasındaki ödünleşim (trade-off) sorununu incelemektedir. Dar ve geniş çekirdeği birlikte kullanan **Ensemble Kernel LIME (EK-LIME)** yaklaşımı ile özellikle dengesiz veri setlerinde daha güvenilir açıklamalar üretilmesi hedeflenmiştir.
+> **Özet:** Bu çalışma, LIME açıklamalarında yerel doğruluk ile kararlılık arasındaki ödünleşim sorununu, özellikle dengesiz veri koşullarında incelemektedir. Bu amaçla, yalnızca eğitim verisine uygulanan SMOTE dengelemesi ile dar ve geniş çekirdeği birlikte kullanan Ensemble Kernel LIME yaklaşımı önerilmiştir. Yöntem, LIME, OptiLIME ve SMOTE+OptiLIME ile farklı dengesizlik oranlarına sahip 20 verisetinde karşılaştırılmış; performans yerel doğruluk, değişken kararlılık indeksi ve katsayı kararlılık indeksi üzerinden değerlendirilmiştir. Bulgular, EK-LIME'ın her iki sınıfta da doğruluk-kararlılık dengesini iyileştirdiğini; özellikle çoğunluk sınıfında $0.91$, azınlık sınıfında $0.92$ ve değişken kararlılık indeksi değerlerinin sırasıyla $0.74$ ve $0.72$ olduğunu göstermektedir.
 
 ---
 
 ##  Proje İçeriği
-- 📂 [Kodlar](./kodlar) - Üzerinden deneyleri tekrarlamak için gerekli R scriptlerine ulaşılabilir.
-- 📊 [Veri Setleri](./verisetleri) - Üzerinden aalizde kullanılan farklı dengesizlik oranlarına sahip 20 veri setine ulaşılabilir.
 
+- 📊 [Veri Setleri](./verisetleri) - Üzerinden aalizde kullanılan farklı dengesizlik oranlarına sahip 20 veri setine ulaşılabilir.
+- 📂 [Kodlar](./kodlar) - Üzerinden deneyleri tekrarlamak için gerekli R scriptlerine ulaşılabilir.
+   Dosya içerisinde deney süreci takip edilen adımlar scriptler halinde eklenmiştir.
+
+  
 ###  Kullanılan Teknolojiler
 <p align="left">
   <img src="https://img.shields.io/badge/R_Language-276DC3?style=for-the-badge&logo=r&logoColor=white" />
