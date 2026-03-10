@@ -8,7 +8,7 @@
 
 - 📊 [Veri Setleri](./verisetleri) - Üzerinden aalizde kullanılan farklı dengesizlik oranlarına sahip 20 veri setine ulaşılabilir.
 - 📂 [Kodlar](./kodlar) - Üzerinden deneyleri tekrarlamak için gerekli R scriptlerine ulaşılabilir.
-   Dosya içerisinde deney süreci takip edilen adımlar scriptler halinde eklenmiştir.
+   Dosya içerisinde deney süreci boyunca takip edilen adımlar scriptler halinde eklenmiştir.
 
   
 ###  Kullanılan Teknolojiler
