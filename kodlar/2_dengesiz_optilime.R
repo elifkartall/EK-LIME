@@ -28,7 +28,7 @@ standardize_Class <- function(data, target_col = "Class") {
 }
 
 #--------------------------------------------------
-# 2. OptiLIME v3 (Sınıf Başına 100 Gözlem)
+# 2. OptiLIME 
 #--------------------------------------------------
 run_optilime_v3 <- function(data, dataset_name, 
                             target_col = "Class", 
@@ -68,9 +68,6 @@ run_optilime_v3 <- function(data, dataset_name,
   X_test_all <- model.matrix(formula_str, data = test_scaled)[,-1]
   Y_test_all <- test_scaled[[target_col]]
   
-  #--------------------------------------------------
-  # GÜNCELLEME: Her sınıftan 100 gözlem seçimi
-  #--------------------------------------------------
   idx0 <- which(Y_test_all == "0")
   idx1 <- which(Y_test_all == "1")
   
@@ -226,121 +223,4 @@ for (name in dataset_names) {
 # Tüm listeyi tek bir veri çerçevesine birleştir
 final_comparison_optilime <- do.call(rbind, all_results_list)
 
-library(ggplot2)
-
-library(ggplot2)
-library(gridExtra)
-
-library(ggplot2)
-library(gridExtra)
-
-# --- BİRİNCİ GRAFİK (Fidelity vs CSI) ---
-ggplot(final_comparison_df, aes(x = Ortalama_Fidelity, y = CSI, color = Sınıf)) +
-  geom_point(size = 4, alpha = 0.7) +
-  theme_minimal() +
-  labs(title = "OptiLIME: Fidelity vs Katsayı Kararlılığı (CSI)",
-       x = "Ortalama Fidelity (Bağlılık)",
-       y = "CSI (Kararlılık)")
-
-# --- YAN YANA GRAFİKLER İÇİN HAZIRLIK ---
-
-# Ortak Görsel Ayarlar
-base_theme <- theme_minimal() + 
-  theme(legend.position = "none", 
-        plot.title = element_text(size = 11, face = "bold"),
-        axis.title = element_text(size = 9))
-
-# Fonksiyon: Sınıf bazlı scatter plot oluşturucu (Etiketler ve Trend Line kaldırıldı)
-create_class_plot <- function(df, target_class, y_var, title_prefix, color_hex) {
-  subset_df <- df[df$Sınıf == target_class, ]
-  
-  ggplot(subset_df, aes_string(x = "Imbalance_Ratio", y = y_var)) +
-    geom_point(size = 3, color = color_hex, alpha = 0.7) +
-    # geom_smooth ve geom_text satırları tamamen kaldırıldı
-    labs(title = paste0(title_prefix, " (Sınıf ", target_class, ")"),
-         x = "Imbalance Ratio", y = y_var) +
-    base_theme
-}
-
-# 1. Imbalance Ratio vs Kernel Width
-p1_0 <- create_class_plot(final_comparison_df, "0", "Ortalama_KW", "1. IR vs KW", "#00BFC4")
-p1_1 <- create_class_plot(final_comparison_df, "1", "Ortalama_KW", "1. IR vs KW", "#F8766D")
-
-# 2. Imbalance Ratio vs VSI
-p2_0 <- create_class_plot(final_comparison_df, "0", "VSI", "2. IR vs VSI", "#00BFC4")
-p2_1 <- create_class_plot(final_comparison_df, "1", "VSI", "2. IR vs VSI", "#F8766D")
-
-# 3. Imbalance Ratio vs CSI
-p3_0 <- create_class_plot(final_comparison_df, "0", "CSI", "3. IR vs CSI", "#00BFC4")
-p3_1 <- create_class_plot(final_comparison_df, "1", "CSI", "3. IR vs CSI", "#F8766D")
-
-# 4. Imbalance Ratio vs Ortalama Fidelity (Sınıf 0)
-p4_0 <- create_class_plot(final_comparison_df, "0", "Ortalama_Fidelity", "4. IR vs Fidelity", "#00BFC4")
-
-# 5. Imbalance Ratio vs Ortalama Fidelity (Sınıf 1)
-p5_1 <- create_class_plot(final_comparison_df, "1", "Ortalama_Fidelity", "5. IR vs Fidelity", "#F8766D")
-
-# --- GRAFİKLERİ YAN YANA GÖRÜNTÜLEME ---
-
-# Grafik 1: KW Kıyaslaması
-grid.arrange(p1_0, p1_1, ncol = 2)
-
-# Grafik 2: VSI Kıyaslaması
-grid.arrange(p2_0, p2_1, ncol = 2)
-
-# Grafik 3: CSI Kıyaslaması
-grid.arrange(p3_0, p3_1, ncol = 2)
-
-# Grafik 4 & 5: Fidelity Kıyaslaması
-grid.arrange(p4_0, p5_1, ncol = 2)
-
-
-
-install.packages("ggcorrplot")
-install.packages("gridExtra")
-library(ggcorrplot)
-library(gridExtra)
-library(dplyr)
-
-# 1. Korelasyon hesaplanacak sayısal değişkenleri belirle
-# (image_323c87.png dosyasındaki sütun isimlerine göre)
-metrics <- c("Imbalance_Ratio", "Ortalama_Fidelity", "Ortalama_KW", "VSI", "CSI")
-
-# 2. Sınıf 0 (Çoğunluk Sınıfı) için veri hazırlığı ve korelasyon
-df_class0 <- final_comparison_df %>%
-  filter(Sınıf == "0") %>%
-  select(all_of(metrics))
-corr_matrix0 <- cor(df_class0, use = "complete.obs")
-
-# 3. Sınıf 1 (Azınlık Sınıfı) için veri hazırlığı ve korelasyon
-df_class1 <- final_comparison_df %>%
-  filter(Sınıf == "1") %>%
-  select(all_of(metrics))
-corr_matrix1 <- cor(df_class1, use = "complete.obs")
-
-# 4. Sınıf 0 Grafiği
-plot_0 <- ggcorrplot(corr_matrix0, 
-                     hc.order = TRUE, 
-                     type = "lower",
-                     lab = TRUE, 
-                     lab_size = 3.5,
-                     method = "circle", 
-                     colors = c("#E46726", "white", "#6D9EC1"),
-                     title = "Sınıf 0 Korelasyon Matrisi",
-                     ggtheme = theme_minimal()) +
-  theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5))
-
-# 5. Sınıf 1 Grafiği
-plot_1 <- ggcorrplot(corr_matrix1, 
-                     hc.order = TRUE, 
-                     type = "lower",
-                     lab = TRUE, 
-                     lab_size = 3.5,
-                     method = "circle", 
-                     colors = c("#E46726", "white", "#6D9EC1"),
-                     title = "Sınıf 1 Korelasyon Matrisi",
-                     ggtheme = theme_minimal()) +
-  theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5))
-
-# 6. İki grafiği yan yana bastır
 grid.arrange(plot_0, plot_1, ncol = 2)
