@@ -29,7 +29,7 @@ standardize_Class <- function(data, target_col = "Class") {
 }
 
 #--------------------------------------------------
-# 2. Dinamik Standart LIME Fonksiyonu
+# 2. LIME Fonksiyonu
 #--------------------------------------------------
 run_standard_lime_dynamic <- function(data, dataset_name, 
                                       target_col = "Class", 
@@ -60,10 +60,9 @@ run_standard_lime_dynamic <- function(data, dataset_name,
   X_train <- model.matrix(formula_str, data = train_scaled)[,-1]
   Y_train <- train_scaled[[target_col]]
   
-  rf_model <- randomForest(x = X_train, y = Y_train, ntree = 100)
+  rf_model <- randomForest(x = X_train, y = Y_train)
   
-  #--- DİNAMİK KW HESAPLAMA ---
-  # Formül: sqrt(Özellik Sayısı) * 0.75
+  # sqrt(Özellik Sayısı) * 0.75
   p_features <- ncol(X_train)
   dynamic_kw <- sqrt(p_features) * 0.75
   
