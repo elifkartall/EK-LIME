@@ -5,8 +5,8 @@
 ---
 
 ##  Proje İçeriği
-- 📂 [Kodlar](./kodlar) - Deneyleri tekrarlamak için gerekli R scriptleri.
-- 📊 [Veri Setleri](./verisetleri) - Analizde kullanılan 20 farklı veri seti.
+- 📂 [Kodlar](./kodlar) - Üzerinden deneyleri tekrarlamak için gerekli R scriptlerine ulaşılabilir.
+- 📊 [Veri Setleri](./verisetleri) - Üzerinden aalizde kullanılan farklı dengesizlik oranlarına sahip 20 veri setine ulaşılabilir.
 
 ###  Kullanılan Teknolojiler
 <p align="left">
