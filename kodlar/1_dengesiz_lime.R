@@ -6,6 +6,8 @@ library(dplyr)
 #--------------------------------------------------
 # 1. Veri Standardizasyonu Fonksiyonu
 #--------------------------------------------------
+#Veri setleri farklı hedef değişken yapılarına sahip olduğu için 0 çoğunluk ,1 azınlık sınıfı olacak şekilde veri standardize edildi.
+
 standardize_Class <- function(data, target_col = "Class") {
   data <- na.omit(data)
   y <- as.factor(data[[target_col]])
