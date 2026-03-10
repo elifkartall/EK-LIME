@@ -1,5 +1,5 @@
 #--------------------------------------------------
-# Ensemble Kernel LIME (EK-LIME) sb=3
+# Ensemble Kernel LIME (EK-LIME) 
 #--------------------------------------------------
 
 library(caret)
@@ -21,12 +21,10 @@ standardize_Class_smote_EK <- function(data, target_col = "Class") {
   freq <- table(y)
   minority_class <- names(freq)[which.min(freq)]
   
-  # 0 ve 1 olarak normalize et
   data[[target_col]] <- factor(ifelse(y == minority_class, "1", "0"), levels = c("0", "1"))
   return(data)
 }
 
-# 2. Ana Fonksiyon
 run_ensemble_kernel_v3_EK <- function(data, dataset_name, 
                                       target_col = "Class", 
                                       target_r2 = 0.9, 
@@ -42,16 +40,16 @@ run_ensemble_kernel_v3_EK <- function(data, dataset_name,
   train_raw <- data[train_idx, ]
   test_raw  <- data[-train_idx, ]
   
-  # Sadece numerik sütunları al (SMOTE ve RF için güvenli yol)
+ 
   numeric_cols <- names(which(sapply(train_raw, is.numeric)))
   feature_cols <- setdiff(numeric_cols, target_col)
   
-  # Ölçekleme
+
   preproc <- preProcess(train_raw[, feature_cols], method = c("center", "scale"))
   train_sc <- predict(preproc, train_raw)
   test_sc  <- predict(preproc, test_raw)
   
-  # SMOTE Uygulama (Hata payını azaltmak için sadece numeriklerle)
+
   smote_output <- SMOTE(X = train_sc[, feature_cols], target = train_sc[[target_col]], K = 5)
   train_smote <- smote_output$data
   colnames(train_smote)[ncol(train_smote)] <- target_col
@@ -59,7 +57,7 @@ run_ensemble_kernel_v3_EK <- function(data, dataset_name,
   
   # RF Model
   rf_formula <- as.formula(paste(target_col, "~ ."))
-  rf_model_EK <- randomForest(rf_formula, data = train_smote, ntree = 100)
+  rf_model_EK <- randomForest(rf_formula, data = train_smote)
   
   # Test Hazırlığı
   X_test_all <- test_sc[, feature_cols]
@@ -162,7 +160,7 @@ run_ensemble_kernel_v3_EK <- function(data, dataset_name,
   res0 <- compute_stability_EK(s0_idx)
   res1 <- compute_stability_EK(s1_idx)
   
-  # Sonuçları eşleştir (Sınıf 0 ve 1'in varlığını kontrol et)
+
   summary_stats_EK$VSI <- ifelse(summary_stats_EK$Sınıf == "0", res0$VSI, res1$VSI)
   summary_stats_EK$CSI <- ifelse(summary_stats_EK$Sınıf == "0", res0$CSI, res1$CSI)
   summary_stats_EK$Imbalance_Ratio <- IR_original
@@ -191,7 +189,3 @@ for (name in dataset_names) {
 final_results <- do.call(rbind, all_results_EK)
 print(final_results)
 
-
-
-
-mean(final_results$CSI)
