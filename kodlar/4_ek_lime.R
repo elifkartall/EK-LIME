@@ -6,9 +6,9 @@ library(caret)
 library(randomForest)
 library(dplyr)
 library(smotefamily) 
-library(ggplot2)
 
 # 1. Veri Standardizasyonu 
+#Veri setleri farklı hedef değişken yapılarına sahip olduğu için 0 çoğunluk ,1 azınlık sınıfı olacak şekilde veri standardize edildi.
 standardize_Class_smote_EK <- function(data, target_col = "Class") {
   data <- na.omit(data)
   
@@ -192,38 +192,6 @@ final_results <- do.call(rbind, all_results_EK)
 print(final_results)
 
 
-
-
-
-
-# 1. Verileri en basit haliyle, ekstra müdahale etmeden hazırla
-df_opti <- as.data.frame(final_df_smote_collected) %>%
-  mutate(Method = "OptiLIME") %>%
-  rename(Fidelity = matches("Ort.*Fidelity")) 
-
-df_ek <- as.data.frame(final_results) %>%
-  mutate(Method = "EK-LIME") %>%
-  rename(Fidelity = matches("Ort.*Fidelity"))
-
-# 2. Verileri alt alta birleştir (df_final3 ismini veriyoruz)
-df_final3 <- bind_rows(df_opti, df_ek)
-
-# 3. Grafik (Eski 75 değerini görmek için Parametrik yapıyoruz)
-library(ggstatsplot)
-
-plot_csi <- ggbetweenstats(
-  data = df_final3,
-  x = Method,
-  y = CSI,
-  type = "parametric", # Önceki kodunuzdaki gibi parametrik yaparsak Mean (75) görünür
-  title = "Stability Improvement: OptiLIME vs. EK-LIME",
-  ylab = "Constant Stability Index (CSI)",
-  xlab = "Method",
-  messages = FALSE,
-  plot.type = "boxvioline" # Hem kutu hem keman grafiği
-)
-
-print(plot_csi);
 
 
 mean(final_results$CSI)
