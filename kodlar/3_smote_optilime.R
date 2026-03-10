@@ -31,7 +31,7 @@ standardize_Class_smote <- function(data, target_col = "Class") {
 }
 
 #--------------------------------------------------
-# 2. OptiLIME v3 (SMOTE Uygulamalı - Orijinal IR Takipli)
+# 2. SMOTE + OptiLIME 
 #--------------------------------------------------
 run_optilime_v3_smote <- function(data, dataset_name, 
                                   target_col = "Class", 
@@ -40,7 +40,7 @@ run_optilime_v3_smote <- function(data, dataset_name,
   
   set.seed(123)
   
-  # --- Orijinal Imbalance Ratio Hesaplama ---
+
   class_freq_orig <- table(data[[target_col]])
   IR_original <- as.numeric(class_freq_orig["0"]) / as.numeric(class_freq_orig["1"])
   
