@@ -4,12 +4,13 @@ library(caret)
 library(randomForest)
 library(dplyr)
 library(smotefamily) 
-library(ggplot2)
-library(gridExtra)
+
 
 #--------------------------------------------------
 # 1. Veri Standardizasyonu
 #--------------------------------------------------
+#Veri setleri farklı hedef değişken yapılarına sahip olduğu için 0 çoğunluk ,1 azınlık sınıfı olacak şekilde veri standardize edildi.
+
 standardize_Class_smote <- function(data, target_col = "Class") {
   data <- na.omit(data)
   y <- as.factor(data[[target_col]])
@@ -186,78 +187,3 @@ final_df_smote_collected <- do.call(rbind, all_results_smote)
 
 write.csv(final_comparison_df, "final_df_smote_collected.csv")
 
-#--------------------------------------------------
-# 4. Görselleştirme (Saf Veri Noktaları)
-#--------------------------------------------------
-base_theme_clean <- theme_minimal() + 
-  theme(legend.position = "none", plot.title = element_text(size = 11, face = "bold"), axis.title = element_text(size = 9))
-
-create_clean_plot <- function(df, target_class, y_var, title_prefix, color_hex) {
-  subset_df <- df[df$Sınıf == target_class, ]
-  ggplot(subset_df, aes_string(x = "Imbalance_Ratio", y = y_var)) +
-    geom_point(size = 3, color = color_hex, alpha = 0.7) +
-    labs(title = paste0(title_prefix, " (Sınıf ", target_class, ")"), x = "Orijinal Imbalance Ratio", y = y_var) +
-    base_theme_clean
-}
-
-# Grafik Panelleri
-grid.arrange(create_clean_plot(final_df_smote_collected, "0", "Ortalama_KW", "1. IR vs KW", "#00BFC4"),
-             create_clean_plot(final_df_smote_collected, "1", "Ortalama_KW", "1. IR vs KW", "#F8766D"), ncol = 2)
-
-grid.arrange(create_clean_plot(final_df_smote_collected, "0", "VSI", "2. IR vs VSI", "#00BFC4"),
-             create_clean_plot(final_df_smote_collected, "1", "VSI", "2. IR vs VSI", "#F8766D"), ncol = 2)
-
-grid.arrange(create_clean_plot(final_df_smote_collected, "0", "CSI", "3. IR vs CSI", "#00BFC4"),
-             create_clean_plot(final_df_smote_collected, "1", "CSI", "3. IR vs CSI", "#F8766D"), ncol = 2)
-
-grid.arrange
-
-
-
-
-# Gerekli kütüphaneler
-library(ggcorrplot)
-library(gridExtra)
-library(dplyr)
-
-# 1. Eksenler için sabit değişken sırasını belirle
-fixed_order <- c("Imbalance_Ratio", "Ortalama_Fidelity", "Ortalama_KW", "VSI", "CSI")
-
-# 2. Sınıf 0 (Çoğunluk) için korelasyon hazırlığı
-df_smote_0 <- final_df_smote_collected %>%
-  filter(Sınıf == "0") %>%
-  select(all_of(fixed_order))
-corr_smote_0 <- cor(df_smote_0, use = "complete.obs")
-
-# 3. Sınıf 1 (Azınlık - SMOTE uygulanmış) için korelasyon hazırlığı
-df_smote_1 <- final_df_smote_collected %>%
-  filter(Sınıf == "1") %>%
-  select(all_of(fixed_order))
-corr_smote_1 <- cor(df_smote_1, use = "complete.obs")
-
-# 4. Sınıf 0 Grafiği (hc.order = FALSE ile sıra sabitlendi)
-p_smote_0 <- ggcorrplot(corr_smote_0, 
-                        hc.order = FALSE, 
-                        type = "lower",
-                        lab = TRUE, 
-                        lab_size = 3.5,
-                        method = "circle", 
-                        colors = c("#E46726", "white", "#6D9EC1"),
-                        title = "SMOTE - Sınıf 0 Korelasyonu",
-                        ggtheme = theme_minimal()) +
-  theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5))
-
-# 5. Sınıf 1 Grafiği (Aynı sıralama korunuyor)
-p_smote_1 <- ggcorrplot(corr_smote_1, 
-                        hc.order = FALSE, 
-                        type = "lower",
-                        lab = TRUE, 
-                        lab_size = 3.5,
-                        method = "circle", 
-                        colors = c("#E46726", "white", "#6D9EC1"),
-                        title = "SMOTE - Sınıf 1 Korelasyonu",
-                        ggtheme = theme_minimal()) +
-  theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5))
-
-# 6. Grafikleri yan yana bastır
-grid.arrange(p_smote_0, p_smote_1, ncol = 2)
