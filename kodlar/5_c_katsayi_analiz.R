@@ -3,9 +3,15 @@ library(tidyr)
 library(ggplot2)
 
 # Veri Hazırlama
-katsayi_kararlilik_df <- final_df %>%
-  mutate(sb_factor = factor(sb)) %>%
-  pivot_longer(cols = c(VSI, CSI), names_to = "Metric", values_to = "Score")
+katsayi_kararlilik_df <- final_df |>
+  mutate(sb_factor = factor(sb))  |>
+  pivot_longer(cols = c(CSI,VSI), names_to = "Metric", values_to = "Score")  |>
+  mutate(
+    Metric = recode(Metric,
+                    CSI = "Katsayı Kararlılık İndeksi",
+                    VSI = "Değişken Kararlılık İndeksi"),
+    Metric = factor(Metric, levels = c("Katsayı Kararlılık İndeksi", "Değişken Kararlılık İndeksi"))  # sıralama
+  )
 
 # Görselleştirme
 ggplot(katsayi_kararlilik_df, aes(x = sb_factor, y = Score)) +
@@ -36,10 +42,9 @@ ggplot(katsayi_kararlilik_df, aes(x = sb_factor, y = Score)) +
     panel.grid.minor = element_blank(),
     panel.grid.major.x = element_blank(),
     
-    plot.title = element_text(hjust = 0, face = "plain", size = 12)
+    plot.title = element_blank()
   ) +
   
   labs(
-    title = "Kararlılık Katsayısının Metrikler Üzerinde Etkisi",
-    x = "Kararlılık Katsayısı"
+    x = "c Katsayısı"
   )
