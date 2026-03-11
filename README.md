@@ -27,8 +27,8 @@
 
 ##  Proje Akışı
 ```ek-lime-repo/
-├── data/                         # Veri setlerini yükleyin ->  [Veri Setleri](./verisetleri) 
-├── scripts/                      # Sıra ile [Kodlar](./kodlar) dosyasında bulunan aşağıdaki R scriptlerini çalıştırın 
+├── data/                         # Veri setlerini yükleyin 
+├── scripts/                      # Sıra ile aşağıdaki R scriptlerini çalıştırın 
 │   ├── 1_dengesiz_lime.R         # Dengesiz veri setleri ile LIME 
 │   ├── 2_dengesiz_optilime.R     # Dengesiz veri setleri ile OptiLIME
 │   ├── 3_smote_optilime.R        # SMOTE sonrası OptiLIME
