@@ -10,21 +10,6 @@
 - 📂 [Kodlar](./kodlar) - Üzerinden deneyleri tekrarlamak için gerekli R scriptlerine ulaşılabilir.
    Dosya içerisinde deney süreci boyunca takip edilen adımlar scriptler halinde eklenmiştir.
 
-##  Proje Akışı
-ek-lime-repo/
-├── data/                         # Veri setlerini yükleyin ->  [Veri Setleri](./verisetleri) 
-├── scripts/                      # Sıra ile [Kodlar](./kodlar) dosyasında bulunan aşağıdaki R scriptlerini çalıştırın 
-│   ├── 1_dengesiz_lime.R         # Dengesiz veri setleri ile LIME 
-│   ├── 2_dengesiz_optilime.R     # Dengesiz veri setleri ile OptiLIME
-│   ├── 3_smote_optilime.R        # SMOTE sonrası OptiLIME
-│   ├── 4_ek_lime.R               # önerilen yöntem EK-LIME 
-│   ├── 5_c_katsayi_analiz.R      # c Katsayısının final açıklama metrikleri üzerinde etkisinin incelenmesi
-│   └── 6_metrik_karsilastirma.R  # Yöntemler arası yerel doğruluk ve kararlılık kıyaslaması
-├── outputs/                      # Beklenen Çıktılar 
-│   ├── katsayi_kararlilik.plot   # c Katsayısının final açıklama metrikleri üzerinde etkisini gösteren grafik (5. adımda)
-│   ├── yontem_karsilastirma.plot # Azınlık(0) sınıfı için yöntemler arası yerel doğruluk ve kararlılık kıyas grafiği
-│   └── yontem_karsilastirma.plot # Çoğunluk(1) sınıfı için yöntemler arası yerel doğruluk ve kararlılık kıyas grafiği
-└── README.md
   
 ###  Kullanılan Teknolojiler
 <p align="left">
@@ -40,6 +25,22 @@ ek-lime-repo/
 
 ---
 
+##  Proje Akışı
+```ek-lime-repo/
+├── data/                         # Veri setlerini yükleyin ->  [Veri Setleri](./verisetleri) 
+├── scripts/                      # Sıra ile [Kodlar](./kodlar) dosyasında bulunan aşağıdaki R scriptlerini çalıştırın 
+│   ├── 1_dengesiz_lime.R         # Dengesiz veri setleri ile LIME 
+│   ├── 2_dengesiz_optilime.R     # Dengesiz veri setleri ile OptiLIME
+│   ├── 3_smote_optilime.R        # SMOTE sonrası OptiLIME
+│   ├── 4_ek_lime.R               # önerilen yöntem EK-LIME 
+│   ├── 5_c_katsayi_analiz.R      # c Katsayısının final açıklama metrikleri üzerinde etkisinin incelenmesi
+│   └── 6_metrik_karsilastirma.R  # Yöntemler arası yerel doğruluk ve kararlılık kıyaslaması
+├── outputs/                      # Beklenen Çıktılar 
+│   ├── katsayi_kararlilik.plot   # c Katsayısının final açıklama metrikleri üzerinde etkisini gösteren grafik (5. adımda)
+│   ├── yontem_karsilastirma.plot # Azınlık(0) sınıfı için yöntemler arası yerel doğruluk ve kararlılık kıyas grafiği
+│   └── yontem_karsilastirma.plot # Çoğunluk(1) sınıfı için yöntemler arası yerel doğruluk ve kararlılık kıyas grafiği
+└── README.md
+```
 ## Bulgular
 
 ### 1. Çoğunluk Sınıfı Performansı
