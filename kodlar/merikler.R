@@ -36,7 +36,7 @@ combined_df_clean <- bind_rows(
   )
 
 # 2. Grafik Fonksiyonu
-generate_ultra_clean_plot <- function(class_label) {
+generate_plot <- function(class_label) {
   grouped_ggbetweenstats(
     data = filter(combined_df_clean, Sınıf == class_label),
     x = Method,
@@ -48,6 +48,13 @@ generate_ultra_clean_plot <- function(class_label) {
     sample.size.label = FALSE,
     bf.message = FALSE,
     mean.plotting = TRUE,
+    
+  
+    centrality.label.args = list(
+      size = 4,
+      fontface = "bold"
+    ),
+    
     package = "RColorBrewer",
     palette = "Set2",
     plotgrid.args = list(nrow = 1),
@@ -55,11 +62,13 @@ generate_ultra_clean_plot <- function(class_label) {
       title = NULL,
       subtitle = NULL
     ),
+    
     ggplot.component = list(
-      theme_bw(base_size = 11),   # base size burada kullanıldı
+      theme_bw(base_size = 11),
       theme(
         axis.title = element_blank(),
-        axis.text.x = element_text(size = 12),
+        axis.text.x = element_text(size = 14, face = "bold"),
+        axis.text.y = element_text(size = 12),
         legend.position = "none"
       ),
       scale_x_discrete(labels = c("LIME", "DLIME", "GLIME", "Opti-LIME","EK-LIME"))
@@ -67,8 +76,8 @@ generate_ultra_clean_plot <- function(class_label) {
   )
 }
 
-plot_0 <- generate_ultra_clean_plot("0")
-plot_1 <- generate_ultra_clean_plot("1")
+plot_0 <- generate_plot("0")
+plot_1 <- generate_plot("1")
 
 print(plot_0)
 print(plot_1)
