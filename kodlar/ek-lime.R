@@ -74,7 +74,7 @@ run_ensemble_kernel_v8_EK_new <- function(data, dataset_name,
     
     # Kernel optimizasyonu
     opt_small <- optimize(function(kw) {
-      w <- exp(-(dists^2) / kw)
+      w <- exp(-(dists^2) / kw^2)
       r2 <- summary(lm(y_probs ~ ., data = sampled_points, weights = w))$r.squared
       if(is.na(r2)) return(0)
       return(r2)
